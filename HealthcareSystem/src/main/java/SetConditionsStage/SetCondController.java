@@ -1,4 +1,4 @@
-package SetConditionsStage;
+package setConditionsStage;
 
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
@@ -42,12 +42,17 @@ public class SetCondController {
         stage.close();
     }
 
+    public void setSubmitDisable() {
+        submitButton.setDisable(isValidParameters());
+    }
+
     /**
      * Перевірка чи встановлені значення comboBox.
      */
-    public void isValidParameters() {
-        submitButton.setDisable(maxAgeCmbBox.getValue() == null || bloodTypeCmbBox.getValue() == null);
+    public boolean isValidParameters() {
+        return (maxAgeCmbBox.getValue() == null || bloodTypeCmbBox.getValue() == null);
     }
+
     /**
      * Функція для передачі максимального віку між stage-контролерами.
      */

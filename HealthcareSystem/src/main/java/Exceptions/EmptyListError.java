@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 /**
  * Клас винятку пустого списку. Виняток наслідує клас Exception.

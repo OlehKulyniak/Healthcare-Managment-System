@@ -1,6 +1,6 @@
-package AddPatientStage;
+package addPatientStage;
 
-import PatientPack.Patient;
+import model.Patient;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -43,6 +43,8 @@ public class AddController {
     private Label vaccMsgLabel;
     private Patient newPatient;
 
+    private final String primaryColor = "#3366FF";
+
     @FXML
     public void initialize() {
         //Ініціалізація значень birthYearComboBox можливими значеннями року народження пацієнта.
@@ -67,14 +69,13 @@ public class AddController {
      * Функція завершення роботи вікна зі збереженням результатів.
      */
     public void submitClick(ActionEvent actionEvent) {
-        newPatient = new Patient();
-        newPatient.setFullName(fullNameField.getText());
-        newPatient.setBirthYear(birthYearCmbBox.getValue());
-        newPatient.setGender(genderCmbBox.getValue().charAt(0));
-        newPatient.setBloodType(bloodTypeCmbBox.getSelectionModel().getSelectedItem());
-        newPatient.setIsDisabled(yesRadioButton.isSelected());
-        newPatient.setChrDisease(chrDiseaseField.getText());
-        newPatient.setVaccinations(Arrays.stream(vaccinationsField.getText().split("\\|")).toList());
+        newPatient = new Patient(fullNameField.getText(),
+                                 birthYearCmbBox.getValue(),
+                                 genderCmbBox.getValue().charAt(0),
+                                 bloodTypeCmbBox.getSelectionModel().getSelectedItem(),
+                                 yesRadioButton.isSelected(),
+                                 chrDiseaseField.getText(),
+                                 Arrays.stream(vaccinationsField.getText().split("\\|")).toList());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -90,13 +91,13 @@ public class AddController {
      * Функція перевірки поля повного ім'я пацієнта при введені тексту в поле fullNameField.
      */
     public void isFullNameValidOnKR() {
-        isValidParameters();
-        if(fullNameField.getText().isEmpty() || fullNameField.getText().isBlank()) {
-            fullNameField.setStyle("-fx-border-color: #3366FF");
+        submitButton.setDisable(!isValidParameters());
+        if (fullNameField.getText().isBlank()) {
+            fullNameField.setStyle("-fx-border-color: " + primaryColor);
             fullNameMsgLabel.setText("");
             return;
         }
-        if(!isValidFullName(fullNameField.getText())) {
+        if (!isValidFullName(fullNameField.getText())) {
             fullNameField.setStyle("-fx-border-color: red");
              if(fullNameField.getText().length() < 3) {
                  fullNameMsgLabel.setText("The length must be greater than 2");
@@ -106,7 +107,7 @@ public class AddController {
                  fullNameMsgLabel.setText("Incorrect symbol founded");
              }
         } else {
-            fullNameField.setStyle("-fx-border-color: #3366FF");
+            fullNameField.setStyle("-fx-border-color: " + primaryColor);
             fullNameMsgLabel.setText("");
         }
     }
@@ -115,9 +116,9 @@ public class AddController {
      * Функція перевірки поля хронічного захворювання при введені тексту в поле chrDiseaseField.
      */
     public void isChrDiseaseValidOnKR() {
-        isValidParameters();
-        if(chrDiseaseField.getText().isEmpty() || chrDiseaseField.getText().isBlank()) {
-            chrDiseaseField.setStyle("-fx-border-color: #3366FF");
+        submitButton.setDisable(!isValidParameters());
+        if(chrDiseaseField.getText().isBlank()) {
+            chrDiseaseField.setStyle("-fx-border-color: " + primaryColor);
             chrDiseaseMsgLabel.setText("");
             return;
         }
@@ -128,9 +129,8 @@ public class AddController {
             } else {
                 chrDiseaseMsgLabel.setText("Cannot contain @ ! # $ % ^ & * ~ ? > < \" ' / \\ ");
             }
-            isValidParameters();
         } else {
-            chrDiseaseField.setStyle("-fx-border-color: #3366FF");
+            chrDiseaseField.setStyle("-fx-border-color: " + primaryColor);
             chrDiseaseMsgLabel.setText("");
         }
     }
@@ -139,9 +139,9 @@ public class AddController {
      * Функція перевірки поля масиву вакцинацій при введені тексту в поле vaccinationsField.
      */
     public void isVaccValidOnKR() {
-        isValidParameters();
-        if(vaccinationsField.getText().isEmpty() || vaccinationsField.getText().isBlank()) {
-            vaccinationsField.setStyle("-fx-border-color: #3366FF");
+        submitButton.setDisable(!isValidParameters());
+        if(vaccinationsField.getText().isBlank()) {
+            vaccinationsField.setStyle("-fx-border-color: " + primaryColor);
             vaccMsgLabel.setText("");
             return;
         }
@@ -153,7 +153,7 @@ public class AddController {
                 vaccMsgLabel.setText("Cannot contain @ ! # $ % ^ & * ~ ? > < \" ' / \\");
             }
         } else {
-            vaccinationsField.setStyle("-fx-border-color: #3366FF");
+            vaccinationsField.setStyle("-fx-border-color: " + primaryColor);
             vaccMsgLabel.setText("");
         }
 
@@ -161,24 +161,14 @@ public class AddController {
     /**
      * Перевірка чи всі параметри введені коректно для ввімкнення кнопки submit.
      */
-    public void isValidParameters() {
-        boolean checker = true;
-        if(!isValidFullName(fullNameField.getText())) {
-            checker = false;
-        } else if(birthYearCmbBox.getSelectionModel().isEmpty()) {
-            checker = false;
-        } else if(genderCmbBox.getSelectionModel().isEmpty()) {
-            checker = false;
-        } else if(bloodTypeCmbBox.getSelectionModel().isEmpty()) {
-            checker = false;
-        } else if(answerToggleGroup.getSelectedToggle() == null) {
-            checker = false;
-        } else if(!isValidDisease(chrDiseaseField.getText())) {
-            checker = false;
-        } else if(!isValidVaccinations(vaccinationsField.getText())) {
-            checker = false;
-        }
-        submitButton.setDisable(!checker);
+    public boolean isValidParameters() {
+        return (isValidFullName(fullNameField.getText()) &&
+           !birthYearCmbBox.getSelectionModel().isEmpty() &&
+           !genderCmbBox.getSelectionModel().isEmpty() &&
+           !bloodTypeCmbBox.getSelectionModel().isEmpty() &&
+           !(answerToggleGroup.getSelectedToggle() == null) &&
+           isValidDisease(chrDiseaseField.getText()) &&
+           isValidVaccinations(vaccinationsField.getText()));
     }
 
     /**
@@ -192,14 +182,17 @@ public class AddController {
      * Функція, що перевіряє вміст поля chrDiseaseField на коректні дані.
      */
     public boolean isValidDisease(String str) {
-        return str.length() > 0 && str.length() <= 30 && (!str.matches("(.*)[@!#$%^&*~?><\"'/\\\\](.*)"));
+        return !str.isEmpty() && str.length() <= 30 && (!str.matches("(.*)[@!#$%^&*~?><\"'/\\\\](.*)"));
     }
 
     /**
      * Функція, що перевіряє вміст поля vaccinationsField на коректні дані.
      */
     public boolean isValidVaccinations(String str) {
-        return str.length() > 0 && str.length() <= 100 && (!str.matches("(.*)[@!#$%^&*~?><\"'/\\\\](.*)"));
+        return !str.isBlank() && str.length() <= 100 && (!str.matches("(.*)[@!#$%^&*~?><\"'/\\\\](.*)"));
     }
+
+
+
 
 }

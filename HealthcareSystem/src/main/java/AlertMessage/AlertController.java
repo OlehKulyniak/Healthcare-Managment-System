@@ -1,4 +1,4 @@
-package AlertMessage;
+package alertMessage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,7 +48,7 @@ public class AlertController {
     }
     public AlertController createMessage(String title, String information) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AlertMessage/AlertScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/alertMessage/AlertScene.fxml"));
             Scene scene = new Scene(loader.load());
             scene.setFill(Color.TRANSPARENT);
             stage = new Stage();

@@ -1,6 +1,6 @@
-package VaccinationsStage;
+package vaccinationsStage;
 
-import PatientPack.Patient;
+import model.Patient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -31,6 +31,8 @@ public class VaccController {
     @FXML
     private Label newVaccMsgLabel;
     private Patient currPatient;
+
+    private final String primaryColor = "#3366FF";
 
     @FXML
     public void initialize() {
@@ -69,6 +71,7 @@ public class VaccController {
         currPatient.addVaccination(newVaccField.getText());
         vaccTableView.getItems().add(newVaccField.getText());
         newVaccField.clear();
+        addVaccButton.setDisable(true);
     }
 
     /**
@@ -100,7 +103,7 @@ public class VaccController {
      * */
     public void isNewVaccValidOnKR() {
         if(newVaccField.getText().isEmpty() || newVaccField.getText().isBlank()) {
-            newVaccField.setStyle("-fx-border-color: #3366FF");
+            newVaccField.setStyle("-fx-border-color: " + primaryColor);
             newVaccMsgLabel.setText("");
             addVaccButton.setDisable(true);
             return;
@@ -114,7 +117,7 @@ public class VaccController {
             }
             addVaccButton.setDisable(true);
         } else {
-            newVaccField.setStyle("-fx-border-color: #3366FF");
+            newVaccField.setStyle("-fx-border-color: " + primaryColor);
             newVaccMsgLabel.setText("");
             addVaccButton.setDisable(false);
         }
@@ -124,6 +127,6 @@ public class VaccController {
      * Перевірка на коректність вміст поля назви нового щеплення newVaccField.
      */
     boolean isValidString(String str) {
-        return str.length() <= 30 && !str.matches("(.*)[@!#$%^&*~><?\"'/\\\\](,*)");
+        return !str.isEmpty() && str.length() <= 30 && !str.matches("(.*)[@!#$%^&*~><?\"'/\\\\](,*)");
     }
 }

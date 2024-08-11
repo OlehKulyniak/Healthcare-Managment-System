@@ -40,6 +40,7 @@
 .deleteButton:hover {
   -fx-background-color: #F23121;
 }
+
 .deleteButton:pressed {
   -fx-background-color: #F31818;
   -fx-text-fill: #FBF7F7;
@@ -69,8 +70,7 @@
 }
 
 .split-menu-button .label:hover {
-  -fx-background-color: #2557FB;
-}
+  -fx-background-color: #2557FB;}
 
 .split-menu-button .arrow-button:hover {
   -fx-background-color: #2557FB;
@@ -135,6 +135,14 @@
  -fx-background-color: #3366FF;
  -fx-background-radius: 0 5 5 0;
  -fx-border-width: 0;
+}
+
+.actionButtonsVBox {
+  -fx-background-color: #3366FF;
+}
+
+.leftMenuBorderPane {
+  -fx-background-color: #3366FF;
 }
 
 .tableView {

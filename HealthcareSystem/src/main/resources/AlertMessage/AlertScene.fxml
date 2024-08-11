@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="360.0" stylesheets="@AlertStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AlertMessage.AlertController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="360.0" stylesheets="@AlertStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alertMessage.AlertController">
    <children>
       <Label fx:id="infoLabel" alignment="CENTER" layoutX="90.0" layoutY="35.0" prefHeight="95.0" prefWidth="255.0" wrapText="true">
          <font>

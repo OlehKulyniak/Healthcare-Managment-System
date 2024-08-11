@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 /**
  * Клас винятку помилки видалення пацієнта зі списку. Виняток наслідує клас Exception.

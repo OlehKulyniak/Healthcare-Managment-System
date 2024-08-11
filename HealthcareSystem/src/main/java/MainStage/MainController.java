@@ -1,36 +1,42 @@
-package MainStage;
+package mainStage;
 
-import Exceptions.EmptyListError;
-import Exceptions.FileNotSelected;
-import Exceptions.InvalidFileData;
-import Exceptions.PatientAddingError;
-import Exceptions.PatientDeletionError;
-import Exceptions.StageLaunchError;
-import VaccinationsStage.VaccController;
-import AddPatientStage.AddController;
-import SetConditionsStage.SetCondController;
-import AlertMessage.AlertController;
+import exceptions.EmptyListError;
+import exceptions.FileNotSelected;
+import exceptions.InvalidFileData;
+import exceptions.PatientAddingError;
+import exceptions.PatientDeletionError;
+import exceptions.StageLaunchError;
+import vaccinationsStage.VaccController;
+import addPatientStage.AddController;
+import setConditionsStage.SetCondController;
+import alertMessage.AlertController;
+import model.Patient;
 
-import PatientPack.Patient;
+import javafx.geometry.Insets;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.collections.FXCollections;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.util.converter.CharacterStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.*;
+import java.time.Year;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -60,12 +66,15 @@ public class MainController {
     private ToggleButton oldstLstVaccTButton;
     @FXML
     private ToggleButton maxVaccNoDsblTButton;
+    @FXML
+    private VBox actionButtonsVBox;
     private List<Patient> patients;
 
     @FXML
     public void initialize() {
+        mainTableView.setEditable(true);
         //Встановлення кожного поля класу Patient у відповідний стовпець таблиці mainTableView.
-        fullNameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        fullNameCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getFullName()));
         birthYearCol.setCellValueFactory(new PropertyValueFactory<>("birthYear"));
         genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
         bloodTypeCol.setCellValueFactory(new PropertyValueFactory<>("bloodType"));
@@ -95,17 +104,94 @@ public class MainController {
                     vaccinationButton.getStyleClass().add("vaccinationButton");
                     setGraphic(vaccinationButton);
                     vaccinationButton.setOnAction(event -> getVaccinationsClick(item, getIndex()));
+
                 }
             }
 
         });
+
+        fullNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        fullNameCol.setOnEditCommit(event -> {
+            if(!event.getNewValue().isBlank() && event.getNewValue().length() <= 30) {
+                Patient patient = event.getRowValue();
+                patient.setFullName(event.getNewValue());
+                patients.set(event.getTablePosition().getRow(), patient);
+            } else {
+                mainTableView.getItems().set(event.getTablePosition().getRow(), event.getRowValue());
+            }
+        });
+
+        birthYearCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        birthYearCol.setOnEditCommit(event -> {
+            if(event.getNewValue() > Year.now().getValue() - 180 && event.getNewValue() < Year.now().getValue()) {
+                Patient patient = event.getRowValue();
+                patient.setBirthYear(event.getNewValue());
+                patients.set(event.getTablePosition().getRow(), patient);
+            } else {
+                mainTableView.getItems().set(event.getTablePosition().getRow(), event.getRowValue());
+            }
+        });
+
+        genderCol.setCellFactory(TextFieldTableCell.forTableColumn(new CharacterStringConverter()));
+        genderCol.setOnEditCommit(event -> {
+            if(event.getNewValue() == 'M' || event.getNewValue() == 'F' || event.getNewValue() == 'O') {
+                Patient patient = event.getRowValue();
+                patient.setGender(event.getNewValue());
+                patients.set(event.getTablePosition().getRow(), patient);
+            } else {
+                mainTableView.getItems().set(event.getTablePosition().getRow(), event.getRowValue());
+            }
+        });
+
+        bloodTypeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        bloodTypeCol.setOnEditCommit(event -> {
+            String newBloodType = event.getNewValue();
+            if(newBloodType.equals("A+") || newBloodType.equals("A-") ||
+               newBloodType.equals("B+") || newBloodType.equals("B-") ||
+               newBloodType.equals("AB+") || newBloodType.equals("AB-") ||
+               newBloodType.equals("O+") || newBloodType.equals("O-")) {
+                Patient patient = event.getRowValue();
+                patient.setBloodType(event.getNewValue());
+                patients.set(event.getTablePosition().getRow(), patient);
+            } else {
+                mainTableView.getItems().set(event.getTablePosition().getRow(), event.getRowValue());
+            }
+        });
+
+        isDisabledCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        isDisabledCol.setOnEditCommit(event -> {
+            Patient patient = event.getRowValue();
+            if(event.getNewValue().equals("Yes")) {
+                patient.setIsDisabled(true);
+                patients.set(event.getTablePosition().getRow(), patient);
+            } else if(event.getNewValue().equals("No")) {
+                patient.setIsDisabled(false);
+                patients.set(event.getTablePosition().getRow(), patient);
+            } else {
+                mainTableView.getItems().set(event.getTablePosition().getRow(), patient);
+            }
+        });
+
+        chrDiseaseCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        chrDiseaseCol.setOnEditCommit(event -> {
+            if(!event.getNewValue().isBlank() && event.getNewValue().length() <= 30) {
+                Patient patient = event.getRowValue();
+                patient.setChrDisease(event.getNewValue());
+                patients.set(event.getTablePosition().getRow(), patient);
+            } else {
+                mainTableView.getItems().set(event.getTablePosition().getRow(), event.getRowValue());
+            }
+        });
+
         //Встановлення назви кнопки для ToggleButtons.
         maxAgeCrtBTypeTButton.setText("Younger with given\nblood type");
         oldstLstVaccTButton.setText("Oldest with least vaccinations");
         maxVaccNoDsblTButton.setText("Max vaccinations and\nnot disabled");
-
-        //Створення списку пацієнтів.
         patients = new ArrayList<>();
+        actionButtonsVBox.heightProperty().addListener((observable, oldValue, newValue) -> {
+           actionButtonsVBox.setPadding(new Insets(newValue.doubleValue() / 10, 0, 0,0));
+           actionButtonsVBox.setSpacing(actionButtonsVBox.getHeight() / 25);
+        });
     }
 
     /**
@@ -114,7 +200,7 @@ public class MainController {
     */
     public void searchFilterOnKR() {
         Set<Patient> searchingRes = new LinkedHashSet<>();
-        if(searchField.getText().isEmpty() || searchField.getText().isBlank() || searchField.getText() == null) {
+        if(searchField.getText().isBlank()) {
             mainTableView.setItems(FXCollections.observableArrayList(patients));
             return;
         }
@@ -130,20 +216,12 @@ public class MainController {
      * Функція скасування пошуку за певними параметром та встановлення початкового списку patients у mainTableView.
      */
     public void allPatientsClick() {
-        try {
-            maxAgeCrtBTypeTButton.setSelected(false);
-            oldstLstVaccTButton.setSelected(false);
-            maxVaccNoDsblTButton.setSelected(false);
-            searchField.clear();
-            mainTableView.getItems().clear();
-            mainTableView.setItems(FXCollections.observableArrayList(patients));
-        }
-        catch(Exception error) {
-            AlertController alertController = new AlertController();
-            alertController.createMessage("Unknown Error",
-                                     "An unknown error has occured." +
-                                               "\nTry restarting the program.");
-        }
+        maxAgeCrtBTypeTButton.setSelected(false);
+        oldstLstVaccTButton.setSelected(false);
+        maxVaccNoDsblTButton.setSelected(false);
+        searchField.clear();
+        mainTableView.getItems().clear();
+        mainTableView.setItems(FXCollections.observableArrayList(patients));
     }
 
     /**
@@ -234,14 +312,15 @@ public class MainController {
      */
     public void findMaxAgeCrtBTypeClick() {
         try {
-            if(patients.size() == 0) {
+            if(patients.isEmpty()) {
                 maxAgeCrtBTypeTButton.setSelected(false);
                 throw new EmptyListError();
             }
             if(maxAgeCrtBTypeTButton.isSelected()) {
                 oldstLstVaccTButton.setSelected(false);
                 maxVaccNoDsblTButton.setSelected(false);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/SetConditionsStage/SetCondScene.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass()
+                                                   .getResource("/setConditionsStage/SetCondScene.fxml"));
                 Stage findStage = new Stage();
                 Scene scene;
                 try {
@@ -295,7 +374,7 @@ public class MainController {
      */
     public void findMaxAgeMinVaccClick() {
         try {
-            if(patients.size() == 0) {
+            if(patients.isEmpty()) {
                 oldstLstVaccTButton.setSelected(false);
                 throw new EmptyListError();
             }
@@ -326,7 +405,7 @@ public class MainController {
      */
     public void findMaxVaccNoDsblClick() {
         try {
-            if(patients.size() == 0) {
+            if(patients.isEmpty()) {
                 maxVaccNoDsblTButton.setSelected(false);
                 throw new EmptyListError();
             }
@@ -358,7 +437,7 @@ public class MainController {
      */
     public void addPatientClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddPatientStage/AddScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/addPatientStage/AddScene.fxml"));
             Stage addPatientStage = new Stage();
             Scene scene;
             try {
@@ -428,7 +507,7 @@ public class MainController {
      */
     public void getVaccinationsClick(Patient patient, int index) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VaccinationsStage/VaccScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vaccinationsStage/VaccScene.fxml"));
             Stage vaccinationsStage = new Stage();
             Scene scene;
             try {

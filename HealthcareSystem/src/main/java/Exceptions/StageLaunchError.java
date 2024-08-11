@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 /**
  * Клас винятку помилки запуску нового Stage. Виняток наслідує клас Exception.

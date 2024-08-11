@@ -1,4 +1,4 @@
-package MainStage;
+package mainStage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,6 @@ public class ProgramStart extends Application {
             Image icon = new Image("/Images/MedicalLogo.png");
             stage.getIcons().add(icon);
             stage.centerOnScreen();
-            stage.setResizable(false);
             stage.show();
         }
         catch(Exception error) {

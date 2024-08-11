@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 /**
  * Клас винятку неправильних даних у файлі. Виняток наслідує клас Exception.

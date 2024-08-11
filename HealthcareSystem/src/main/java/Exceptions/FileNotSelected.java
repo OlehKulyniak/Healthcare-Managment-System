@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 /**
  * Клас винятку невибраного файлу. Виняток наслідує клас Exception.
