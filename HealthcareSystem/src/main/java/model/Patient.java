@@ -1,19 +1,11 @@
 package model;
 
-//Інтерфейс для власної реалізації серіалізації
 import java.io.Externalizable;
-//Об'єкти для власної реалізації серіалізації
 import java.io.ObjectOutput;
 import java.io.ObjectInput;
-//Exception, який кидають об'єкти серіалзіації
 import java.io.IOException;
-// List - це інтерфейс, що визначає основні функції для його реалізацій: ArrayList, LinkedList, застарілі Vector, Stack.
 import java.util.List;
-// Реалізація List, масив елементів з можливістю додавати та видаляти елементи.
-// Забезпечує RandomAccess доступ до елементів.
-// За своїм функціоналом схожий до std::vector з C++
 import java.util.ArrayList;
-// Клас, що використовується для представлення року
 import java.time.Year;
 import java.util.Objects;
 
@@ -25,8 +17,6 @@ public class Patient implements Externalizable {
     private boolean isDisabled;
     private String chrDisease;
 
-    // Використовується List для зручного додавання та видалення елементів.
-    // Оскільки List це інтерфейс, то для створення об'єкта потрібно використати його реалізацію ArrayList або LinkedList.
     private List<String> vaccinations;
 
     /**
@@ -63,28 +53,6 @@ public class Patient implements Externalizable {
         this.vaccinations = new ArrayList<>(otherPatient.vaccinations);
     }
 
-    // Оскільки в java немає прямого конструктора переміщення.
-    // Для його реалізації використовується додатковий boolean параметр для вказання, що це конструктор переміщення.
-    /**
-     * Конструктор переміщення.
-     */
-    public Patient(Patient otherPatient, boolean moveMarker) {
-        this.fullName = otherPatient.fullName;
-        this.birthYear = otherPatient.birthYear;
-        this.gender = otherPatient.gender;
-        this.bloodType = otherPatient.bloodType;
-        this.isDisabled = otherPatient.isDisabled;
-        this.chrDisease = otherPatient.chrDisease;
-        this.vaccinations = otherPatient.vaccinations;
-
-        otherPatient.fullName = null;
-        otherPatient.birthYear = 0;
-        otherPatient.gender = '\0';
-        otherPatient.bloodType = null;
-        otherPatient.isDisabled = false;
-        otherPatient.chrDisease = null;
-        otherPatient.vaccinations = null;
-    }
     public String getFullName() {
         return fullName;
     }
@@ -240,8 +208,7 @@ public class Patient implements Externalizable {
         if(bloodType.isEmpty() || bloodType.isBlank()) {
             return patients;
         }
-        // Використання StreamAPI функції filter для пошуку елементів, що містять входження bloodType.
-        // Представлення функцією використовується в методі findByFullName.
+
         return patients.stream().filter(elem -> elem.getBloodType().toLowerCase()
                                                                    .contains(bloodType.toLowerCase())).toList();
     }
@@ -255,8 +222,7 @@ public class Patient implements Externalizable {
         if(chrDisease.isEmpty() || chrDisease.isBlank()) {
             return patients;
         }
-        // Використання StreamAPI функції filter для пошуку елементів, що містять входження chrDisease.
-        // Представлення функцією використовується в методі findByFullName.
+
         return patients.stream().filter(elem -> elem.getChrDisease().toLowerCase()
                                                                     .contains(chrDisease.toLowerCase())).toList();
     }
@@ -292,7 +258,7 @@ public class Patient implements Externalizable {
             return new ArrayList<>();
         }
         int currYear = Year.now().getValue();
-        // StreamAPI функція filter для пошуку елементів молодших ніж age та з заданою групою крові.
+
         return patients.stream().filter(elem -> (currYear - elem.getBirthYear() ) <= age &&
                                                             elem.getBloodType().equals(bloodType)).toList();
     }
@@ -304,9 +270,6 @@ public class Patient implements Externalizable {
      * Функція повертає List, якщо пошук був успішним, або null, якщо patients == null.
      * */
     public static List<Patient> findMaxAgeMinVacc(List<Patient> patients) {
-//        if(patients == null) {
-//            return null;
-//        }
         // Пошук середнього віку пацієнтів.
         int avgBirthYear = 0;
         for(Patient patient : patients) {
@@ -335,9 +298,6 @@ public class Patient implements Externalizable {
      * Функція повертає List, якщо пошук був успішним, або null, якщо пацієнтів == null.
      */
     public static List<Patient> findMaxVaccNoDsbl(List<Patient> patients) {
-//        if(patients == null) {
-//            return null;
-//        }
         int maxVacc = patients.get(0).getVaccinations().size();
         for(int i = 1; i < patients.size(); i++) {
             if(maxVacc < patients.get(i).getVaccinations().size() && !patients.get(i).getIsDisabled()) {
