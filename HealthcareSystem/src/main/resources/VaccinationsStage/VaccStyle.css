@@ -1,0 +1,124 @@
+.root {
+  -fx-background-color: #FBF7F7;
+}
+
+.deleteButton {
+  -fx-background-color: #F24949;
+  -fx-background-radius: 5;
+  -fx-border-width: 0;
+  -fx-font-family: Segoe UI;
+  -fx-font-size: 14;
+  -fx-text-fill: #FBFBFB;
+}
+
+.deleteButton:hover {
+  -fx-background-color: #F23121;
+}
+.deleteButton:pressed {
+  -fx-background-color: #F31818;
+  -fx-text-fill: #FBF7F7;
+}
+
+.commonButton {
+  -fx-background-color: #3366FF;
+  -fx-background-radius: 15;
+  -fx-border-width: 0;
+  -fx-font-family: Verdana;
+  -fx-font-size: 14;
+  -fx-text-fill: #FBFBFB;
+}
+
+.commonButton:hover {
+  -fx-background-color: #1A53FF;
+}
+
+.commonButton:pressed {
+  -fx-background-color: #1A53FF;
+  -fx-text-fill: #ECECEC;
+}
+
+.tableView {
+  -fx-background-color: #FBF7F7;
+  -fx-selection-bar: #4C77FE;
+  -fx-selection-bar-non-focused: #658AFE;
+}
+
+.tableView .scroll-bar:horizontal {
+  -fx-min-height: 0;
+  -fx-pref-height: 0;
+  -fx-max-height: 0;
+}
+
+.tableView .scroll-bar:horizontal .increment-arrow,
+.tableView .scroll-bar:horizontal .decrement-arrow {
+  -fx-shape: " ";
+}
+
+.tableView .table-cell {
+  -fx-font-family: Segoe UI;
+  -fx-font-size: 14;
+}
+
+.tableView .table-row-cell:selected {
+  -fx-background-radius: 3;
+  -fx-border-width: 0;
+}
+
+.tableView .column-header {
+  -fx-background-color: #3366FF;
+}
+
+.tableView .column-header .label {
+  -fx-text-fill: #FBF7F7;
+}
+
+.tableView .column-header-background {
+  -fx-background-radius: 10 10 0 0;
+  -fx-background-color: transparent;
+}
+
+.vaccinationColumn {
+  -fx-background-radius: 10 0 0 0;
+}
+
+.actionColumn {
+  -fx-background-radius: 0 10 0 0;
+  -fx-alignment: center;
+}
+
+.tableView .placeholder {
+  -fx-opacity: 0;
+}
+
+.tableView .filler {
+  -fx-background-color: transparent;
+}
+
+.textField {
+  -fx-background-color: #FBF9F9;
+  -fx-background-radius: 3;
+  -fx-border-color: #B3B3B3;
+  -fx-border-radius: 3;
+  -fx-font-family: Segoe UI;
+  -fx-font-size: 14;
+}
+
+.textField:hover {
+  -fx-cursor: text;
+}
+
+.textField:focused {
+  -fx-border-color: #3366FF;
+}
+
+.textForErrorMsg {
+  -fx-font-family: Segoe UI;
+  -fx-font-size: 12;
+  -fx-text-fill: red;
+}
+
+.textForHeader {
+  -fx-font-family: Verdana;
+  -fx-font-size: 24;
+  -fx-alignment: center;
+}

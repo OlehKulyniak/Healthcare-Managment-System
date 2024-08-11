@@ -1,0 +1,42 @@
+John Smith|1980|M|O+|false|Hypertension|COVID-19,Influenza|
+Emma Johnson|1995|F|A-|false|Asthma|COVID-19,Tetanus|
+Michael Davis|1978|M|B+|true|Diabetes|Influenza,Hepatitis B|
+Sophia Brown|1986|F|AB-|false|None|COVID-19|
+William Wilson|1992|M|O-|false|None|Influenza|
+Olivia Taylor|1970|F|A+|false|Arthritis|COVID-19,Measles,Hepatitis A|
+Ethan Miller|1982|M|B-|false|High Cholesterol|Influenza,Tetanus|
+Ava Martinez|1998|F|AB+|false|None|COVID-19,Influenza|
+James Garcia|1965|M|O+|true|Heart Disease|Influenza,Pneumonia|
+Isabella Rodriguez|1975|F|A-|false|Asthma|COVID-19,Tetanus|
+Sophie Clark|1990|F|B+|false|None|Influenza|
+Daniel Anderson|1988|M|AB-|false|High Blood Pressure|COVID-19,Hepatitis B|
+Mia Hernandez|1983|F|O-|false|Diabetes|Influenza,Hepatitis A|
+Liam Thomas|1972|M|A+|false|Arthritis|COVID-19,Influenza|
+Charlotte Nguyen|1997|F|B-|false|Asthma|COVID-19,Tetanus|
+Noah Walker|1985|M|AB+|false|High Cholesterol|Influenza|
+Amelia Lewis|1979|F|O+|false|Hypertension|COVID-19,Influenza|
+Benjamin Lee|1991|M|A-|false|None|Influenza|
+Harper Perez|1974|F|B+|true|Diabetes|Influenza,Hepatitis B|
+Evelyn Scott|1987|F|O-|false|Asthma|COVID-19,Tetanus|
+Lucas King|1996|M|AB-|false|None|COVID-19|
+Avery Baker|1971|F|A+|false|Arthritis|COVID-19,Measles,Hepatitis A|
+Jackson Green|1984|M|B-|false|High Blood Pressure|Influenza,Tetanus|
+Scarlett Adams|1993|F|O+|false|Heart Disease|COVID-19,Influenza|
+Mateo Campbell|1976|M|AB+|true|Hypertension|Influenza,Hepatitis B|
+Riley Rivera|1989|F|A-|false|None|Influenza|
+Chloe Ward|1977|F|B-|false|Diabetes|COVID-19,Tetanus|
+Brandon Torres|1994|M|O-|false|None|Influenza,Hepatitis A|
+Penelope Peterson|1973|F|A+|false|Arthritis|COVID-19,Influenza|
+Xavier Gray|1981|M|AB-|false|Asthma|Influenza,Hepatitis B|
+Zoey Foster|1999|F|O+|false|High Blood Pressure|COVID-19,Influenza|
+Levi Cooper|1968|M|B+|true|Heart Disease|Influenza,Tetanus|
+Luna Bell|1986|F|A-|false|None|COVID-19|
+Gabriel Price|1970|M|O-|false|Arthritis|Influenza,Hepatitis A|
+Stella Murphy|1992|F|A+|false|Asthma|COVID-19,Influenza|
+Mason Hayes|1980|M|B-|false|High Cholesterol|Influenza,Tetanus|
+Hannah Kelly|1978|F|AB+|false|None|COVID-19,Influenza|
+Aiden Howard|1995|M|O+|false|Hypertension|Influenza|
+Aria Brooks|1971|F|A-|true|Diabetes|COVID-19,Tetanus|
+Ellie James|1984|F|B+|false|None|Influenza|
+Carter Price|1998|M|AB-|false|Heart Disease|COVID-19,Hepatitis B|
+Liam Fisher|1975|M|O-|false|Asthma|Influenza|
