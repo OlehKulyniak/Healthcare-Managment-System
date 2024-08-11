@@ -1,0 +1,3 @@
+This project was written in Java using the JavaFX framework for the interface.
+If you want to run Healthcare-Managment-System on your system, 
+change the Main configuration module path to the JavaFX library on your computer.
