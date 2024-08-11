@@ -144,13 +144,6 @@ public class PatientTest {
         };
     }
 
-
-    // Використати Parametrized tests
-//    @Test
-//    public void findMaxAgeCrtBTypeSuccessTest() {
-//        Assertions.assertEquals(2, Patient.findMaxAgeCrtBType(patients, 45, "AB+").size());
-//    }
-
     // Використати Parametrized tests
     @Test
     public void findMaxAgeCrtBTypeUnSuccessTest() {
